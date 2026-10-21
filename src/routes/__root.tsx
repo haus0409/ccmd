@@ -13,6 +13,7 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { StoreProvider } from "@/lib/store";
+import { ThemeProvider } from "@/lib/theme";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner";
@@ -95,7 +96,11 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600&family=Lora:ital,wght@0,500;0,600;1,500;1,600&display=swap" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,600;0,700;0,800;1,700&family=Oswald:wght@600;700&family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,
@@ -109,6 +114,11 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="vi">
       <head>
         <HeadContent />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var t=localStorage.getItem('cmmd-theme')||'dark';document.documentElement.classList.add(t);}catch(e){}})();`,
+          }}
+        />
       </head>
       <body>
         {children}
@@ -123,15 +133,16 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <StoreProvider>
-        <Navbar />
-        <main className="min-h-[70vh]">
-          <Outlet />
-        </main>
-        <Footer />
-        <Toaster />
-      </StoreProvider>
+      <ThemeProvider>
+        <StoreProvider>
+          <Navbar />
+          <main className="min-h-[70vh]">
+            <Outlet />
+          </main>
+          <Footer />
+          <Toaster />
+        </StoreProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

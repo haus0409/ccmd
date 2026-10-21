@@ -1,3 +1,4 @@
+import { Sparkles } from "lucide-react";
 import type { Panel } from "@/types/journey";
 import { SpeechBubble } from "./SpeechBubble";
 
@@ -14,27 +15,44 @@ interface Props {
 export function ComicPanel({ panel, selectedBubbleId, onSelectBubble, onPickImage }: Props) {
   return (
     <figure className={panel.layout === "wide" ? "col-span-2" : "col-span-2 sm:col-span-1"}>
-      <div className={`relative overflow-hidden rounded-md border-2 border-primary bg-card ${aspect[panel.layout]}`}>
+      <div
+        className={`comic-box relative overflow-hidden rounded-sm border-4 border-border bg-card/60 shadow-[5px_5px_0px_var(--comic-shadow)] ${aspect[panel.layout]}`}
+      >
         {panel.imageUrl ? (
-          <img src={panel.imageUrl} alt={panel.caption} className="absolute inset-0 h-full w-full object-cover" />
+          <img
+            src={panel.imageUrl}
+            alt={panel.caption || "Khung truyện"}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
         ) : (
-          <div className="placeholder-art absolute inset-2 flex items-center justify-center rounded-sm">
+          <div className="placeholder-art absolute inset-0 flex flex-col items-center justify-center p-4 text-center">
+            <Sparkles className="h-6 w-6 text-primary/70 mb-2" />
+            <span className="font-display font-bold text-xs text-primary tracking-wider uppercase">
+              16-BIT COMIC CANVAS
+            </span>
             {onPickImage ? (
-              <button onClick={onPickImage} className="rounded-md border bg-card px-3 py-1 text-xs text-muted-foreground">
-                Thêm ảnh sau
+              <button
+                onClick={onPickImage}
+                className="comic-box font-display mt-3 rounded-sm bg-primary px-3 py-1.5 text-[10px] font-bold tracking-wider text-primary-foreground hover:brightness-110 active:scale-95"
+              >
+                + THÊM HÌNH ẢNH
               </button>
             ) : (
-              <span className="text-xs text-muted-foreground">Tranh minh hoạ sẽ được thêm sau</span>
+              <span className="font-sans text-xs text-muted-foreground mt-1">
+                Tranh minh hoạ sẽ xuất hiện tại đây
+              </span>
             )}
           </div>
         )}
+
+        {/* Bubbles Overlay */}
         {(["top", "center", "bottom"] as const).map((p) => {
           const items = panel.bubbles.filter((b) => b.position === p);
           if (!items.length) return null;
           return (
             <div
               key={p}
-              className={`pointer-events-none absolute inset-0 flex flex-col gap-2 p-4 ${pos[p]} items-start`}
+              className={`pointer-events-none absolute inset-0 flex flex-col gap-2 p-4 ${pos[p]} items-start z-10`}
             >
               {items.map((b) => (
                 <div key={b.id} className="pointer-events-auto">
@@ -49,7 +67,15 @@ export function ComicPanel({ panel, selectedBubbleId, onSelectBubble, onPickImag
           );
         })}
       </div>
-      {panel.caption && <figcaption className="mt-2 text-sm italic text-muted-foreground">{panel.caption}</figcaption>}
+
+      {panel.caption && (
+        <figcaption className="mt-2.5 flex items-center gap-2 border-l-4 border-primary bg-card/60 px-3 py-1.5 text-xs font-sans italic text-foreground/90">
+          <span className="font-display font-bold text-[10px] not-italic text-primary uppercase">
+            Ghi chú:
+          </span>
+          {panel.caption}
+        </figcaption>
+      )}
     </figure>
   );
 }

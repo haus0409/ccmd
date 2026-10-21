@@ -10,14 +10,25 @@ interface State {
   comments: Comment[];
 }
 
-const KEY = "cach-ma-minh-da:v1";
+const KEY = "cach-ma-minh-da:v2";
 const initial: State = {
   journeys: sampleJourneys,
   bookmarks: [],
-  reactions: { "hoc-ve-o-tuoi-30": 24, "lan-truot-dai-hoc": 57, "roi-thanh-pho": 12, "mua-dong-trong-dau": 88 },
+  reactions: {
+    "hoc-ve-o-tuoi-30": 24,
+    "lan-truot-dai-hoc": 57,
+    "roi-thanh-pho": 12,
+    "mua-dong-trong-dau": 88,
+  },
   myReactions: [],
   comments: [
-    { id: "cm1", journeyId: "lan-truot-dai-hoc", author: "Thảo", text: "Cảm ơn bạn đã viết ra. Mình cũng từng như vậy.", createdAt: "2026-01-12" },
+    {
+      id: "cm1",
+      journeyId: "lan-truot-dai-hoc",
+      author: "Thảo",
+      text: "Cảm ơn bạn đã viết ra. Mình cũng từng như vậy.",
+      createdAt: "2026-01-12",
+    },
   ],
 };
 
@@ -50,22 +61,32 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     if (loaded) localStorage.setItem(KEY, JSON.stringify(state));
   }, [state, loaded]);
 
-  const toggleIn = (list: string[], id: string) => (list.includes(id) ? list.filter((x) => x !== id) : [...list, id]);
+  const toggleIn = (list: string[], id: string) =>
+    list.includes(id) ? list.filter((x) => x !== id) : [...list, id];
 
   const saveJourney = useCallback((j: Journey) => {
     setState((s) => {
       const exists = s.journeys.some((x) => x.id === j.id);
       const next = { ...j, updatedAt: new Date().toISOString().slice(0, 10) };
-      return { ...s, journeys: exists ? s.journeys.map((x) => (x.id === j.id ? next : x)) : [next, ...s.journeys] };
+      return {
+        ...s,
+        journeys: exists
+          ? s.journeys.map((x) => (x.id === j.id ? next : x))
+          : [next, ...s.journeys],
+      };
     });
   }, []);
 
   const value: Store = {
     ...state,
     saveJourney,
-    deleteJourney: (id) => setState((s) => ({ ...s, journeys: s.journeys.filter((j) => j.id !== id) })),
+    deleteJourney: (id) =>
+      setState((s) => ({ ...s, journeys: s.journeys.filter((j) => j.id !== id) })),
     togglePublished: (id) =>
-      setState((s) => ({ ...s, journeys: s.journeys.map((j) => (j.id === id ? { ...j, published: !j.published } : j)) })),
+      setState((s) => ({
+        ...s,
+        journeys: s.journeys.map((j) => (j.id === id ? { ...j, published: !j.published } : j)),
+      })),
     toggleBookmark: (id) => setState((s) => ({ ...s, bookmarks: toggleIn(s.bookmarks, id) })),
     toggleReaction: (id) =>
       setState((s) => {
@@ -81,7 +102,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         ...s,
         comments: [
           ...s.comments,
-          { id: newId("cm"), journeyId, author: DEMO_USER.name, text, createdAt: new Date().toISOString().slice(0, 10) },
+          {
+            id: newId("cm"),
+            journeyId,
+            author: DEMO_USER.name,
+            text,
+            createdAt: new Date().toISOString().slice(0, 10),
+          },
         ],
       })),
   };

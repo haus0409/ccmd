@@ -5,13 +5,17 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: "Be Vietnam Pro", system-ui, sans-serif;
-  --font-display: "Lora", Georgia, serif;
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
+  --font-sans: "Be Vietnam Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Chakra Petch", "Be Vietnam Pro", sans-serif;
+  --font-comic: "Be Vietnam Pro", "Oswald", sans-serif;
+  --font-pixel: "Be Vietnam Pro", sans-serif;
+
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.375rem;
+  --radius-xl: 0.5rem;
+  --radius-2xl: 0.75rem;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -32,56 +36,159 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-placeholder: var(--placeholder);
-  --shadow-soft: var(--shadow-soft-v);
+
+  --shadow-soft: 3px 3px 0px 0px var(--comic-shadow);
+  --shadow-comic: 4px 4px 0px 0px var(--comic-shadow);
+  --shadow-comic-accent: 5px 5px 0px 0px var(--primary);
 }
 
 :root {
-  --radius: 0.75rem;
-  --background: oklch(0.94 0.024 78);       /* #F4EBDD */
-  --foreground: oklch(0.29 0.02 260);       /* #252B35 */
-  --card: oklch(0.985 0.016 85);            /* #FFF9EF */
-  --card-foreground: oklch(0.29 0.02 260);
-  --popover: oklch(0.985 0.016 85);
-  --popover-foreground: oklch(0.29 0.02 260);
-  --primary: oklch(0.26 0.045 258);         /* #17253B */
-  --primary-foreground: oklch(0.985 0.016 85);
-  --secondary: oklch(0.34 0.05 255);        /* #263A56 */
-  --secondary-foreground: oklch(0.985 0.016 85);
-  --muted: oklch(0.9 0.02 78);
-  --muted-foreground: oklch(0.55 0.01 70);  /* #77736D */
-  --accent: oklch(0.65 0.13 45);            /* #D8794A */
-  --accent-foreground: oklch(0.985 0.016 85);
-  --destructive: oklch(0.55 0.19 27);
-  --destructive-foreground: oklch(0.985 0.016 85);
-  --border: oklch(0.86 0.025 78);           /* #DED3C3 */
-  --input: oklch(0.86 0.025 78);
-  --ring: oklch(0.65 0.13 45);
-  --placeholder: oklch(0.91 0.022 78);
-  --shadow-soft-v: 0 1px 2px oklch(0.26 0.045 258 / 0.06), 0 8px 24px -12px oklch(0.26 0.045 258 / 0.18);
+  --radius: 0.25rem;
+
+  /* LIGHT MODE: Concept "Nâu Nhạt Nhẹ Nhàng" - Vintage Kraft Paper / Warm Indie Comic */
+  --background: oklch(0.96 0.02 85); /* #F5EFE6 Warm cream / kraft paper */
+  --foreground: oklch(0.24 0.035 55); /* #2C2219 Deep espresso comic ink */
+  --card: oklch(0.92 0.028 80); /* #EADFC9 Warm vintage paper card */
+  --card-foreground: oklch(0.24 0.035 55);
+  --popover: oklch(0.93 0.025 82);
+  --popover-foreground: oklch(0.24 0.035 55);
+
+  --primary: oklch(0.68 0.16 70); /* #D97706 Warm vintage amber comic gold */
+  --primary-foreground: #ffffff;
+
+  --secondary: oklch(0.88 0.03 80); /* #DFD3B9 Soft sand paper */
+  --secondary-foreground: oklch(0.24 0.035 55);
+
+  --muted: oklch(0.89 0.022 80);
+  --muted-foreground: oklch(0.48 0.035 60); /* #6E5D4B Warm sepia */
+
+  --accent: oklch(0.55 0.19 35); /* #C2410C Terracotta / warm action comic crimson */
+  --accent-foreground: #ffffff;
+
+  --destructive: oklch(0.52 0.22 28);
+  --destructive-foreground: #ffffff;
+
+  --border: oklch(0.32 0.045 55); /* #3D3024 Warm vintage comic inking line */
+  --input: oklch(0.95 0.015 85);
+  --ring: oklch(0.68 0.16 70);
+  --placeholder: oklch(0.88 0.025 80);
+
+  --comic-shadow: #3d3024;
+  --dot-color: rgba(60, 45, 30, 0.08);
+}
+
+.dark {
+  /* DARK MODE: Gotham Cyber-Noir / Retro Marvel Superhero Anti-Hero */
+  --background: oklch(0.12 0.018 260); /* #0B0E14 Deep Noir */
+  --foreground: oklch(0.96 0.01 240); /* #F0F4FC Crisp White */
+  --card: oklch(0.17 0.022 260); /* #131722 Dark Armor Panel */
+  --card-foreground: oklch(0.96 0.01 240);
+  --popover: oklch(0.15 0.02 260);
+  --popover-foreground: oklch(0.96 0.01 240);
+
+  --primary: oklch(0.82 0.17 90); /* #FACC15 Electric Superhero Gold */
+  --primary-foreground: oklch(0.1 0.02 260); /* #080A0F */
+
+  --secondary: oklch(0.24 0.03 260); /* #1E2433 Tactical Navy */
+  --secondary-foreground: oklch(0.92 0.02 240);
+
+  --muted: oklch(0.2 0.022 260); /* #171C26 */
+  --muted-foreground: oklch(0.68 0.02 250); /* #94A3B8 */
+
+  --accent: oklch(0.64 0.23 25); /* #FF2B4E Crimson Villain Action */
+  --accent-foreground: #ffffff;
+
+  --destructive: oklch(0.58 0.24 25);
+  --destructive-foreground: #ffffff;
+
+  --border: oklch(0.3 0.035 260); /* #2A3347 Crisp Comic Border */
+  --input: oklch(0.22 0.025 260); /* #1A202D Form Input */
+  --ring: oklch(0.82 0.17 90);
+  --placeholder: oklch(0.2 0.025 260);
+
+  --comic-shadow: #000000;
+  --dot-color: rgba(255, 255, 255, 0.05);
 }
 
 @layer base {
-  * { border-color: var(--color-border); }
+  * {
+    border-color: var(--color-border);
+  }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
+    background-image: radial-gradient(circle, var(--dot-color) 1px, transparent 1px);
+    background-size: 16px 16px;
+    background-attachment: fixed;
+    overflow-x: hidden;
   }
-  h1, h2, h3 { font-family: var(--font-display); }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+  }
+}
+
+@utility font-comic {
+  font-family: var(--font-comic);
+}
+
+@utility font-pixel {
+  font-family: var(--font-pixel);
+}
+
+@utility comic-box {
+  border: 2px solid var(--border);
+  box-shadow: 4px 4px 0px 0px var(--comic-shadow);
+  transition: all 0.15s ease-out;
+}
+
+@utility comic-box-hover {
+  border: 2px solid var(--border);
+  box-shadow: 4px 4px 0px 0px var(--comic-shadow);
+  transition: all 0.15s ease-out;
+  &:hover {
+    transform: translate(-2px, -2px);
+    border-color: var(--primary);
+    box-shadow: 5px 5px 0px 0px var(--primary);
+  }
+}
+
+@utility comic-badge {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: 1.5px solid currentColor;
+  box-shadow: 2px 2px 0px 0px var(--comic-shadow);
 }
 
 @utility placeholder-art {
   background-color: var(--placeholder);
-  background-image: repeating-linear-gradient(135deg, transparent 0 12px, oklch(0.86 0.025 78 / 0.5) 12px 13px);
-  border: 1.5px dashed var(--border);
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent 0 10px,
+    rgba(217, 119, 6, 0.08) 10px 11px
+  );
+  border: 2px dashed var(--border);
 }
 
 @utility input-field {
   width: 100%;
   border-radius: var(--radius-md);
-  border: 1px solid var(--border);
-  background: var(--card);
-  padding: 0.5rem 0.75rem;
-  font-size: 0.9rem;
-  &:focus { outline: 2px solid var(--ring); outline-offset: 1px; }
+  border: 2px solid var(--border);
+  background: var(--input);
+  color: var(--foreground);
+  padding: 0.5rem 0.85rem;
+  font-size: 0.925rem;
+  box-shadow: 3px 3px 0px 0px var(--comic-shadow);
+  transition: all 0.15s ease-in-out;
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 4px 4px 0px 0px var(--primary);
+  }
 }

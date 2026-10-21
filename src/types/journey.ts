@@ -1,4 +1,4 @@
-export type BubbleType = "speech" | "thought" | "narration";
+export type BubbleType = "speech" | "thought" | "narration" | "action";
 export type BubblePosition = "top" | "center" | "bottom";
 export type TextAlign = "left" | "center" | "right";
 export type PanelLayout = "wide" | "square" | "tall";
@@ -40,6 +40,7 @@ export interface Journey {
   author: string;
   authorId: string;
   coverLabel: string;
+  coverImage?: string;
   privacy: Privacy;
   status: JourneyStatus;
   published: boolean;
@@ -75,4 +76,5 @@ export const BUBBLE_LABEL: Record<BubbleType, string> = {
   speech: "Lời thoại",
   thought: "Suy nghĩ",
   narration: "Dẫn truyện",
+  action: "Hiệu ứng SFX",
 };
